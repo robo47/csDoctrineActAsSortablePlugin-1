@@ -5,16 +5,16 @@ SortableArticle:
       filter:       false
   columns:
     name:           string(255)
-  actAs:  
+  actAs:
     Sortable:       ~
-      
+
 SortableArticleUniqueBy:
   options:
     symfony:
       form:         false
       filter:       false
-  actAs:  
-    Sortable: 
+  actAs:
+    Sortable:
       uniqueBy:     [category_id]
   columns:
     name:           string(255)
@@ -26,7 +26,7 @@ SortableArticleUniqueBy:
     Category:
       local:        category_id
       class:        SortableArticleCategory
-      
+
 SortableArticleCategory:
   columns:
     id:

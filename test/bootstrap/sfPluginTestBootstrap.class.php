@@ -34,19 +34,21 @@ class sfPluginTestBootstrap
     $config = $this->configuration->getPluginConfiguration('sfDoctrinePlugin')->getCliConfig();
 
     //$this->databasemanager->loadConfiguration();
-    
+
     $db = $this->databasemanager->getDatabase('doctrine');
     /* @var $db sfDoctrineDatabase */
-    
+
     try {
+        // ignore error if database does not yet exist (clean CI-env)
         $db->getDoctrineConnection()->dropDatabase();
     } catch (Exception $e) {
     }
-        $db->getDoctrineConnection()->createDatabase();
-    
+    $db->getDoctrineConnection()->createDatabase();
+
 
     Doctrine_Core::loadModels($config['models_path'], Doctrine_Core::MODEL_LOADING_CONSERVATIVE);
     Doctrine_Core::createTablesFromArray(Doctrine_Core::getLoadedModels());
+    Doctrine_Core::loadData(dirname(__FILE__).'/../fixtures/project/data/fixtures/categories.yml');
   }
 
   // Find all tests and run them
